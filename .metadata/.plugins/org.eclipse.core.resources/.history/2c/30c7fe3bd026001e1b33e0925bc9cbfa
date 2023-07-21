@@ -1,0 +1,32 @@
+package com.luongloi.usermanagement.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+//import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.luongloi.usermanagement.model.User;
+import com.luongloi.usermanagement.service.UserService;
+//import com.luongloi.usermanagement.service.UserService;
+
+@Controller
+public class UserController {
+	@Autowired
+	private UserService userService;
+	
+	@GetMapping("/users")
+	public ResponseEntity<?> showListUser(Model model) {
+		List<User> listUsers = userService.getAllUsers();
+		model.addAttribute("listUsers",listUsers);
+		return ResponseEntity.ok(listUsers);
+	}
+	@PostMapping("/new-user")
+	public ResponseEntity<?> createNewUser(Model model) {
+		User newUser = userService.createUser(new User(1,"abc","def","010020","and", "andds", "abcdef"));
+	}
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;other_package&apos; to &apos;com.luongloi.hellocomponent.other_package&apos;&#x0D;&#x0A;- Original project: &apos;hello-component&apos;&#x0D;&#x0A;- Original element: &apos;hello-component/src/main/java/other_package&apos;&#x0D;&#x0A;- Renamed element: &apos;hello-component/src/main/java/com.luongloi.hellocomponent.other_package&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;other_package&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;other_package" name="com.luongloi.hellocomponent.other_package" qualified="false" references="true" stamp="1688633045554" textual="false" version="1.0"/>
+</session>

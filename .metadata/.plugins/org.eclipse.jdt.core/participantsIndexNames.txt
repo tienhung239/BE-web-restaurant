@@ -1,0 +1,13 @@
+INDEX VERSION 1.134
+C:\Users\Admin\Desktop\thuctapSpring\spring_workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4136095245.index
+\S07L01-Spring-MVC-minimal-setup\src\main\java
+C:\Users\Admin\Desktop\thuctapSpring\spring_workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\213575952.index
+\demo-dynamic-web\src\main\java
+C:\Users\Admin\Desktop\thuctapSpring\spring_workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2845931206.index
+\S06L03 - Simple dynamic web project\src\main\java
+C:\Users\Admin\Desktop\thuctapSpring\spring_workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1666587002.index
+\03.02-WebappWithSpringBoot\src\main\java
+C:\Users\Admin\Desktop\thuctapSpring\spring_workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3399895718.index
+\S06L04-Model-in-web-project\src\main\java
+C:\Users\Admin\Desktop\thuctapSpring\spring_workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4164251999.index
+\03.02-WebappWithSpringBoot\src\main\java

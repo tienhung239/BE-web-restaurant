@@ -1,0 +1,5 @@
+package com.luongloi.usermanagement.model.mapper;
+
+public class UserMapper {
+
+}

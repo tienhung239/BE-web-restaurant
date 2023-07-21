@@ -1,0 +1,5 @@
+package usermanagement.respository;
+
+public interface UserRepository {
+
+}

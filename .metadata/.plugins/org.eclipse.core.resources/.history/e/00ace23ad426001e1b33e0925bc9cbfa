@@ -1,0 +1,5 @@
+package com.luongloi.usermanagement.dto;
+
+public class UserDTO {
+
+}

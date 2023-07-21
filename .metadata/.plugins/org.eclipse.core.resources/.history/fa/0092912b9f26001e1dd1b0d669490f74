@@ -1,0 +1,10 @@
+package com.luongloi.usermanagement.respository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+//import org.springframework.stereotype.Repository;
+
+import com.luongloi.usermanagement.model.User;
+
+public interface UserRepository extends JpaRepository<User, Integer> {
+
+}
