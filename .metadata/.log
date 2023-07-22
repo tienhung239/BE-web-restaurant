@@ -179,3 +179,9 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.springframework.tooling.boot.ls 1 0 2023-07-22 14:20:58.322
 !MESSAGE Classpath changed for project: restaurant-book-table
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2023-07-22 14:25:49.951
+!MESSAGE Classpath changed for project: restaurant-book-table
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2023-07-22 14:28:14.152
+!MESSAGE Classpath changed for project: restaurant-book-table
