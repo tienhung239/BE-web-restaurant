@@ -1,0 +1,20 @@
+package com.intern.restaurant.mapper;
+
+import java.util.Optional;
+
+import com.intern.restaurant.dto.UserDTO;
+import com.intern.restaurant.model.User;
+
+public class UserMapper {
+	public static UserDTO toUserDTO(Optional<User> optional) {
+		UserDTO userDto = new UserDTO();
+		userDto.setId(optional.get().getUs_id());
+		userDto.setUsername(optional.get().getUsername());
+		userDto.setFullname(optional.get().getFullname());
+		userDto.setAddress(optional.get().getAddress());
+		userDto.setMobile(optional.get().getMobile());
+		userDto.setEmail(optional.get().getEmail());
+		
+		return userDto;
+	}
+}

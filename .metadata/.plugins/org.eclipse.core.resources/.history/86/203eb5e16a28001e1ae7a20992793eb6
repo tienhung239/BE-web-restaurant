@@ -1,0 +1,19 @@
+package com.intern.restaurant;
+
+import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.intern.restaurant.model.User;
+import com.intern.restaurant.service.UserService;
+
+public class UserServiceTest {
+	
+	@Autowired
+	private UserService userService;
+	
+	public void createUser() {
+		User user = new User(new User(1, "user1", "abc123","Luong Loi", "ha noi", "0912345678", 1, LocalDateTime.now(),0,0,"luongloi@gmail.com");
+		User user = userService.createUser();
+	}
+}

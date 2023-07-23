@@ -1,6 +1,7 @@
 package com.intern.restaurant.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -12,16 +13,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "users")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements Serializable{
 	private static final long serialVersionUID = -297553281792804396L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int us_id;
 	
 	@NotNull(message = "User name can not be NULL")
@@ -51,7 +56,7 @@ public class User implements Serializable{
 	private int status;
 	
 	@Column(name = "us_created_data")
-	private String created_data;
+	private LocalDateTime created_data;
 	
 	@Column(name = "us_update_password")
 	private String update_password;
