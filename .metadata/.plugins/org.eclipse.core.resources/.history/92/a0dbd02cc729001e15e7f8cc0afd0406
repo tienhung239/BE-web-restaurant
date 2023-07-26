@@ -1,0 +1,77 @@
+package com.intern.restaurant;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.intern.restaurant.exception.UserException;
+import com.intern.restaurant.model.User;
+import com.intern.restaurant.repository.UserRepository;
+import com.intern.restaurant.service.UserService;
+
+public class TestCreateUserService {
+
+    private UserService userService;
+
+    @Test
+    public void testCreateUser_Success() {
+        // Tạo User mới
+        User newUser = new User();
+        newUser.setUsername("testuser");
+        newUser.setPassword("testpassword");
+        newUser.setFullname("Test User");
+        newUser.setAddress("Test Address");
+        newUser.setMobile("0123456789");
+        newUser.setEmail("test@example.com");
+
+        // Thực hiện phương thức createUser
+        User createdUser = userService.createUser(newUser);
+
+        // Kiểm tra xem User đã được lưu thành công
+        assertNotNull(createdUser);
+        assertEquals("testuser", createdUser.getUsername());
+        assertEquals("Test User", createdUser.getFullname());
+        // Kiểm tra các thuộc tính khác tùy theo yêu cầu của bạn
+    }
+
+    @Test
+    public void testCreateUser_UserExistsWithMobile() {
+        // Tạo User đã tồn tại với số điện thoại đã cho
+        User existingUser = new User();
+        existingUser.setMobile("0123456789");
+        // User đã tồn tại khi gọi findByMobile
+        //assertThat(userService.getUserByMobile("0123456789")).isNotNull();
+
+        User newUser = new User();
+        newUser.setUsername("testuser");
+        newUser.setPassword("testpassword");
+        newUser.setFullname("Test User");
+        newUser.setAddress("Test Address");
+        newUser.setMobile("0123456789");
+        newUser.setEmail("test@example.com");
+
+        // Khi thực hiện phương thức createUser, ngoại lệ UserException sẽ được ném
+        assertThrows(UserException.class, () -> userService.createUser(newUser));
+    }
+
+    @Test
+    public void testCreateUser_UserExistsWithEmail() {
+        // Tạo User đã tồn tại với email đã cho
+        User existingUser = new User();
+        existingUser.setEmail("test@example.com");
+        // trả về User đã tồn tại khi gọi findByEmail
+        //assertThat(userService.getUserByEmail("test@example.com")).isNotNull();
+
+        User newUser = new User();
+        newUser.setUsername("testuser");
+        newUser.setPassword("testpassword");
+        newUser.setFullname("Test User");
+        newUser.setAddress("Test Address");
+        newUser.setMobile("0123456789");
+        newUser.setEmail("test@example.com");
+
+        // Khi thực hiện phương thức createUser, ngoại lệ UserException sẽ được ném
+        assertThrows(UserException.class, () -> userService.createUser(newUser));
+    }
+}

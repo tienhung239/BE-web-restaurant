@@ -1,5 +1,6 @@
 package com.intern.restaurant.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.intern.restaurant.dto.UserDTO;
-import com.intern.restaurant.dto.UserUpdateDTO;
 import com.intern.restaurant.exception.UserException;
 import com.intern.restaurant.exception.UserNotFoundException;
 import com.intern.restaurant.mapper.UserMapper;
@@ -18,17 +18,52 @@ import com.intern.restaurant.repository.UserRepository;
 @Service
 public class UserServiceImpl implements UserService {
 	
-	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 	
 	@Override
 	public User createUser(User user) {
 		// TODO Auto-generated method stub
-		Optional<User> existing = userRepository.findByMobile(user.getMobile());
-		if(existing.isPresent())
+		Optional<User> existingMobile = userRepository.findByMobile(user.getMobile());
+		Optional<User> existingEmail = userRepository.findByEmail(user.getEmail());
+		Optional<User> existingUsername = userRepository.findByUsername(user.getUsername());
+
+		if(existingMobile.isPresent() || existingEmail.isPresent() || existingUsername.isPresent())
 			throw new UserException("User already exists");
-		userRepository.save(user);
-		return user;
+		return userRepository.save(user);
+	}
+	
+	// Mặc định tạo ra user bình thường:
+	// id sẽ tự động tăng theo giá trị lớn nhất trong database
+	// group = 0 là khách hàng bình thường
+	// status = 0 là tài khoản chưa kích hoạt
+	// update_password = 0 chưa update mật khẩu
+	@Override
+	public User createUser(String username, String password, String fullname,String mobile,String email, String address) {
+		User user = User.builder()
+				.us_id(0)
+				.username(username)
+				.password(password)
+				.fullname(fullname)
+				.mobile(mobile)
+				.email(email)
+				.address(address)
+				.created_data(LocalDateTime.now())
+				.group(0)
+				.status(0)
+				.update_password(0)
+				.build();
+		Optional<User> existingMobile = userRepository.findByMobile(user.getMobile());
+		Optional<User> existingEmail = userRepository.findByEmail(user.getEmail());
+		Optional<User> existingUsername = userRepository.findByUsername(user.getUsername());
+
+		if(existingMobile.isPresent() || existingEmail.isPresent() || existingUsername.isPresent())
+			throw new UserException("User already exists");
+		return userRepository.save(user);
 	}
 
 	@Override
@@ -46,50 +81,108 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO getUserById(int id) {
 		// TODO Auto-generated method stub
-		UserDTO userDto = UserMapper.toUserDTO(userRepository.findById(id).orElse(null));
-		return userDto;
+		Optional<User> o_user = userRepository.findById(id);
+		if (!o_user.isPresent())
+			throw new UserNotFoundException("User not found");
+		else
+			return UserMapper.toUserDTO(o_user);
+	}
+	
+	@Override
+	public UserDTO getUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		Optional<User> o_user = userRepository.findByUsername(username);
+		if (!o_user.isPresent())
+			throw new UserNotFoundException("User not found");
+		else
+			return UserMapper.toUserDTO(o_user);
 	}
 
 	@Override
 	public UserDTO getUserByMobile(String mobile) {
 		// TODO Auto-generated method stub
-		UserDTO userDto = UserMapper.toUserDTO(userRepository.findByMobile(mobile).orElse(null));
-		return userDto;
+		Optional<User> o_user = userRepository.findByMobile(mobile);
+		if (!o_user.isPresent())
+			throw new UserNotFoundException("User not found");
+		else
+			return UserMapper.toUserDTO(o_user);
 	}
 
 	@Override
 	public UserDTO getUserByEmail(String email) {
 		// TODO Auto-generated method stub
-		UserDTO userDto = UserMapper.toUserDTO(userRepository.findByEmail(email).orElse(null));
-		return userDto;
-	}
-	
-	@Override
-	public void deleteUser(int id) {
-		// TODO Auto-generated method stub
-		userRepository.deleteById(id);
-	}
-
-
-	@Override
-	public User updateUser(User user,UserUpdateDTO userUpdateDto) {
-		// TODO Auto-generated method stub
-		user.setPassword(userUpdateDto.getPassword());
-		user.setFullname(userUpdateDto.getFullname());
-		user.setAddress(userUpdateDto.getAddress());
-		user.setMobile(userUpdateDto.getMobile());
-		user.setEmail(userUpdateDto.getEmail());
-		return userRepository.save(user);
+		Optional<User> o_user = userRepository.findByEmail(email);
+		if (!o_user.isPresent())
+			throw new UserNotFoundException("User not found");
+		else
+			return UserMapper.toUserDTO(o_user);
 	}
 
 	@Override
-	public User updateUserPassword(User user, String newPassword) {
+	public boolean updateUserPassword(String username, String newPassword) {
 		// TODO Auto-generated method stub
-		user.setPassword(newPassword);
-		return userRepository.save(user);
+		Optional<User> o_user = userRepository.findByUsername(username);
+		if (o_user.isPresent()) {
+			User user = o_user.get();
+			user.setPassword(newPassword);
+			user.setUpdate_password(1);
+			userRepository.save(user);
+			return true;
+		}
+		return false;
 		
 	}
 
+	@Override
+	public boolean updateUserEmail(String username, String email) {
+		// TODO Auto-generated method stub
+		Optional<User> o_user = userRepository.findByUsername(username);
+		if (o_user.isPresent()) {
+			User user = o_user.get();
+			user.setEmail(email);
+			userRepository.save(user);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateUserMobile(String username, String mobile) {
+		// TODO Auto-generated method stub
+		Optional<User> o_user = userRepository.findByUsername(username);
+		if (o_user.isPresent()) {
+			User user = o_user.get();
+			user.setMobile(mobile);
+			userRepository.save(user);
+			return true;
+		}
+		return false;
+	}
 	
+	@Override
+	public boolean updateUserAddress(String username, String address) {
+		// TODO Auto-generated method stub
+		Optional<User> o_user = userRepository.findByUsername(username);
+		if (o_user.isPresent()) {
+			User user = o_user.get();
+			user.setAddress(address);
+			userRepository.save(user);
+			return true;
+		}
+		return false;
+	}
+	
+
+	@Override
+	public void deleteAll() {
+		// TODO Auto-generated method stub
+		userRepository.deleteAll();
+	}
+
+	@Override
+	public void deleteById(int id) {
+		// TODO Auto-generated method stub
+		userRepository.deleteById(id);
+	}
 
 }

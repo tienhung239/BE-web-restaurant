@@ -9,28 +9,24 @@ import javax.validation.constraints.Pattern;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "users")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class User implements Serializable{
 	private static final long serialVersionUID = -297553281792804396L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int us_id;
+	@Builder.Default
+	private int us_id = 0;
 	
 	@NotNull(message = "User name can not be NULL")
-	@Column(name = "us_username")
+	@Column(name = "us_username", unique = true)
 	private String username;
 	
 	@NotNull(message = "Please enter the password")
@@ -59,13 +55,14 @@ public class User implements Serializable{
 	private LocalDateTime created_data;
 	
 	@Column(name = "us_update_password")
-	private String update_password;
+	private int update_password;
 	
 	@Column(name = "us_group")
-	private String group;
+	private int group;
 	
 	@NotNull(message = "Please enter the email")
 	@Email
 	@Column(name = "us_email", unique = true)
-	private String email;
+	private String email;	
+	
 }
