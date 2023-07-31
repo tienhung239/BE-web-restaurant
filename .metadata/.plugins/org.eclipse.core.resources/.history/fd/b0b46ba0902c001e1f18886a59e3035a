@@ -1,0 +1,5 @@
+package com.intern.restaurant.model;
+
+public class CustomUserDetails {
+
+}

@@ -27,6 +27,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User createUser(User user) {
+		user.setCreated_data(LocalDateTime.now());
+		user.setUpdate_password(0);
+		user.setStatus(0);
 		// TODO Auto-generated method stub
 		Optional<User> existingMobile = userRepository.findByMobile(user.getMobile());
 		Optional<User> existingEmail = userRepository.findByEmail(user.getEmail());
@@ -42,6 +45,8 @@ public class UserServiceImpl implements UserService {
 	// group = 0 là khách hàng bình thường
 	// status = 0 là tài khoản chưa kích hoạt
 	// update_password = 0 chưa update mật khẩu
+	
+	
 	@Override
 	public User createUser(String username, String password, String fullname,String mobile,String email, String address) {
 		User user = User.builder()
@@ -172,6 +177,19 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 	
+	@Override
+	public boolean updateUserGroup(String username, int group) {
+		// TODO Auto-generated method stub
+		Optional<User> o_user = userRepository.findByUsername(username);
+		if (o_user.isPresent()) {
+			User user = o_user.get();
+			user.setGroup(group);
+			userRepository.save(user);
+			return true;
+		}
+		return false;
+	}
+	
 
 	@Override
 	public void deleteAll() {
@@ -184,5 +202,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		userRepository.deleteById(id);
 	}
+
+	
 
 }

@@ -22,6 +22,7 @@ public interface UserService {
 	public boolean updateUserPassword(String username, String newPassword);
 	public boolean updateUserEmail(String username, String email);
 	public boolean updateUserMobile(String username, String mobile);
+	public boolean updateUserGroup(String username, int group);
 	
 	public void deleteById(int id);
 	public void deleteAll();
