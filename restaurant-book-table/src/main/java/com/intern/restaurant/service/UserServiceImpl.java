@@ -16,7 +16,7 @@ import com.intern.restaurant.model.User;
 import com.intern.restaurant.repository.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
 	
 	private UserRepository userRepository;
 	
@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
 		user.setCreated_data(LocalDateTime.now());
 		user.setUpdate_password(0);
 		user.setStatus(0);
+		user.setGroup(0);
 		// TODO Auto-generated method stub
 		Optional<User> existingMobile = userRepository.findByMobile(user.getMobile());
 		Optional<User> existingEmail = userRepository.findByEmail(user.getEmail());
@@ -40,37 +41,6 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(user);
 	}
 	
-	// Mặc định tạo ra user bình thường:
-	// id sẽ tự động tăng theo giá trị lớn nhất trong database
-	// group = 0 là khách hàng bình thường
-	// status = 0 là tài khoản chưa kích hoạt
-	// update_password = 0 chưa update mật khẩu
-	
-	
-	@Override
-	public User createUser(String username, String password, String fullname,String mobile,String email, String address) {
-		User user = User.builder()
-				.us_id(0)
-				.username(username)
-				.password(password)
-				.fullname(fullname)
-				.mobile(mobile)
-				.email(email)
-				.address(address)
-				.created_data(LocalDateTime.now())
-				.group(0)
-				.status(0)
-				.update_password(0)
-				.build();
-		Optional<User> existingMobile = userRepository.findByMobile(user.getMobile());
-		Optional<User> existingEmail = userRepository.findByEmail(user.getEmail());
-		Optional<User> existingUsername = userRepository.findByUsername(user.getUsername());
-
-		if(existingMobile.isPresent() || existingEmail.isPresent() || existingUsername.isPresent())
-			throw new UserException("User already exists");
-		return userRepository.save(user);
-	}
-
 	@Override
 	public List<UserDTO> getAllUser() {
 		// TODO Auto-generated method stub
@@ -84,43 +54,33 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public UserDTO getUserById(int id) {
-		// TODO Auto-generated method stub
-		Optional<User> o_user = userRepository.findById(id);
-		if (!o_user.isPresent())
-			throw new UserNotFoundException("User not found");
-		else
-			return UserMapper.toUserDTO(o_user);
-	}
-	
-	@Override
-	public UserDTO getUserByUsername(String username) {
+	public User findByUsername(String username) {
 		// TODO Auto-generated method stub
 		Optional<User> o_user = userRepository.findByUsername(username);
 		if (!o_user.isPresent())
 			throw new UserNotFoundException("User not found");
-		else
-			return UserMapper.toUserDTO(o_user);
+		User user = o_user.get();
+			return user;
 	}
 
 	@Override
-	public UserDTO getUserByMobile(String mobile) {
+	public User findByMobile(String mobile) {
 		// TODO Auto-generated method stub
 		Optional<User> o_user = userRepository.findByMobile(mobile);
 		if (!o_user.isPresent())
 			throw new UserNotFoundException("User not found");
-		else
-			return UserMapper.toUserDTO(o_user);
+		User user = o_user.get();
+		return user;
 	}
 
 	@Override
-	public UserDTO getUserByEmail(String email) {
+	public User findByEmail(String email) {
 		// TODO Auto-generated method stub
 		Optional<User> o_user = userRepository.findByEmail(email);
 		if (!o_user.isPresent())
 			throw new UserNotFoundException("User not found");
-		else
-			return UserMapper.toUserDTO(o_user);
+		User user = o_user.get();
+		return user;
 	}
 
 	@Override
@@ -201,6 +161,16 @@ public class UserServiceImpl implements UserService {
 	public void deleteById(int id) {
 		// TODO Auto-generated method stub
 		userRepository.deleteById(id);
+	}
+
+	@Override
+	public void deleteByUsername(String username) {
+		// TODO Auto-generated method stub
+		for (User user : userRepository.findAll()) {
+			if (user.getUsername().equals(username)) {
+				deleteById(user.getUs_id());
+			}
+		}
 	}
 
 	

@@ -1,7 +1,8 @@
 package com.intern.restaurant.security;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,26 +16,34 @@ public class CustomUserDetails implements UserDetails {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private User user;
+	private String username;
+	private String password;
+	private int us_group;
      
     public CustomUserDetails(User user) {
-        this.user = user;
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.us_group = user.getGroup();
     }
  
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getGroup()+"");
-        return Arrays.asList(authority);
+    	List<GrantedAuthority> authorities = new ArrayList<>();
+    	if (us_group == 0) 
+    		authorities.add(new SimpleGrantedAuthority("USER"));
+    	else 
+    		authorities.add(new SimpleGrantedAuthority("ADMIN"));
+        return authorities;
     }
  
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return password;
     }
  
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return username;
     }
  
     @Override

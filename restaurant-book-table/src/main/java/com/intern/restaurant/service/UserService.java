@@ -10,13 +10,11 @@ import com.intern.restaurant.model.User;
 @Service
 public interface UserService {
 	public User createUser(User user);
-	public User createUser(String username, String password, String fullname,String mobile,String email, String address);
 	
 	public List<UserDTO> getAllUser();
-	public UserDTO getUserById(int id);
-	public UserDTO getUserByUsername(String username);
-	public UserDTO getUserByMobile(String mobile);
-	public UserDTO getUserByEmail(String email);
+	public User findByUsername(String username);
+	public User findByMobile(String mobile);
+	public User findByEmail(String email);
 	
 	public boolean updateUserAddress(String username, String address);
 	public boolean updateUserPassword(String username, String newPassword);
@@ -24,6 +22,7 @@ public interface UserService {
 	public boolean updateUserMobile(String username, String mobile);
 	public boolean updateUserGroup(String username, int group);
 	
+	public void deleteByUsername(String username);
 	public void deleteById(int id);
 	public void deleteAll();
 }

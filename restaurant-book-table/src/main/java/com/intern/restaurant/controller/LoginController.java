@@ -60,10 +60,6 @@ public class LoginController {
 	
 	@PostMapping("/register-process")
 	public String userRegister(User user) {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        
         userService.createUser(user);
         return "register_success";
 	}
@@ -73,11 +69,11 @@ public class LoginController {
 		return("login");
 	}
 	
-	@GetMapping("/users")
-	public String listUsers(Model model) {
-	    List<UserDTO> listUsers = userService.getAllUser();
-	    model.addAttribute("listUsers", listUsers);
-	     
-	    return "users";
-	}
+//	@GetMapping("/users")
+//	public String listUsers(Model model) {
+//	    List<UserDTO> listUsers = userService.getAllUser();
+//	    model.addAttribute("listUsers", listUsers);
+//	     
+//	    return "users";
+//	}
 }
