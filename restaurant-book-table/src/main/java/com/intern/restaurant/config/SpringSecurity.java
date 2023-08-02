@@ -39,22 +39,31 @@ public class SpringSecurity {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf((csrf) -> csrf.disable())
-                .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/register/**").permitAll()
-                                .requestMatchers("/index").permitAll()
-                                .requestMatchers("/users").hasRole("USER")
-                ).formLogin(
+                .authorizeHttpRequests((authorize) -> {
+                	authorize.requestMatchers("/index").permitAll();
+                    authorize.requestMatchers("/register/**").permitAll();
+                    authorize.requestMatchers("/users/**").hasRole("ADMIN");
+                    authorize.requestMatchers("/delete/**").hasRole("ADMIN");
+                    authorize.anyRequest().authenticated();
+				}).formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/users")
+                                .defaultSuccessUrl("/users/")
                                 .permitAll()
                 ).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .permitAll()
-                )
-                .httpBasic(withDefaults()).build();
+                ).httpBasic(withDefaults())
+               .build();
+//    	return http.csrf(csrf -> csrf.disable())
+//    				.authorizeHttpRequests(auth -> {
+//    					auth.requestMatchers("/listusers/**").hasRole("ADMIN");
+//    					auth.requestMatchers("/update-role/**").hasRole("ADMIN");
+//    					auth.anyRequest().authenticated();
+//    				})
+//    				.httpBasic(withDefaults()).build();
     }
 
     @Autowired

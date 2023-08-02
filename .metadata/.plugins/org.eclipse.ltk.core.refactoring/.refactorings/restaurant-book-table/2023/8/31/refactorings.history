@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.intern.restaurant.controller.UserController&apos; to &apos;UserRestController&apos;&#x0D;&#x0A;- Original project: &apos;restaurant-book-table&apos;&#x0D;&#x0A;- Original element: &apos;com.intern.restaurant.controller.UserController&apos;&#x0D;&#x0A;- Renamed element: &apos;com.intern.restaurant.controller.UserRestController&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;UserController&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.intern.restaurant.controller{UserController.java[UserController" matchStrategy="1" name="UserRestController" qualified="false" references="true" similarDeclarations="false" stamp="1690901040614" textual="false" version="1.0"/>
+</session>

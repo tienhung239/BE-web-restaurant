@@ -16,34 +16,30 @@ public class CustomUserDetails implements UserDetails {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String username;
-	private String password;
-	private int us_group;
+	private User user;
      
     public CustomUserDetails(User user) {
-        this.username = user.getUsername();
-        this.password = user.getPassword();
-        this.us_group = user.getGroup();
+        this.user = user;
     }
  
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
     	List<GrantedAuthority> authorities = new ArrayList<>();
-    	if (us_group == 0) 
-    		authorities.add(new SimpleGrantedAuthority("USER"));
+    	if (user.getGroup() == 0) 
+    		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
     	else 
-    		authorities.add(new SimpleGrantedAuthority("ADMIN"));
+    		authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         return authorities;
     }
  
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
  
     @Override
     public String getUsername() {
-        return username;
+        return user.getUsername();
     }
  
     @Override

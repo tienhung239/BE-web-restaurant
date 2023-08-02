@@ -1,18 +1,10 @@
 package com.intern.restaurant.controller;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.intern.restaurant.service.UserService;
 import com.intern.restaurant.dto.UserDTO;
@@ -35,45 +27,21 @@ public class LoginController {
 		return "index";
 	}
 	
-//	@PostMapping(value = "/register", consumes = "application/json")
-//	public ResponseEntity<User> registerAccountHandler(@Valid @RequestBody User user) {
-//		return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
-//		return ResponseEntity.ok(userService.createUser(user));
-//	}
-	
-//	@PostMapping("/register")
-//    public ResponseEntity<String> registerUser(@Valid @RequestBody User user) {
-//        try {
-//            userService.createUser(user);
-//            return ResponseEntity.ok("Registration successful");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Fail registration: " + e.getMessage());
-//        }
-//    }
-	
 	@GetMapping("/register")
 	public String showRegistrationForm(Model model) {
 	    model.addAttribute("user", new User());
 	     
-	    return "signup_form";
+	    return "register";
 	}
 	
-	@PostMapping("/register-process")
+	@PostMapping("/register/save")
 	public String userRegister(User user) {
         userService.createUser(user);
-        return "register_success";
+        return "redirect:/register?success";
 	}
 	
 	@GetMapping("/login")
 	public String login() {
 		return("login");
 	}
-	
-//	@GetMapping("/users")
-//	public String listUsers(Model model) {
-//	    List<UserDTO> listUsers = userService.getAllUser();
-//	    model.addAttribute("listUsers", listUsers);
-//	     
-//	    return "users";
-//	}
 }
