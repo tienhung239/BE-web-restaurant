@@ -1,0 +1,9 @@
+package com.intern.restaurant.dto;
+
+public class FoodDTO {
+	private String name;
+	private String thumbnail;
+	private int price;
+	private String description;
+	private String youtube_link;
+}

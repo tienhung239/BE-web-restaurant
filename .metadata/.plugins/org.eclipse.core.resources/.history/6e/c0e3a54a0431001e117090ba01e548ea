@@ -1,0 +1,5 @@
+package com.intern.restaurant.mapper;
+
+public class FoodMapper {
+
+}

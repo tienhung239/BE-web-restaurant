@@ -25,4 +25,6 @@ public interface UserService {
 	public void deleteByUsername(String username);
 	public void deleteById(int id);
 	public void deleteAll();
+	
+	public int getCurrentUserLogin();
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import com.intern.restaurant.exception.UserNotFoundException;
 import com.intern.restaurant.mapper.UserMapper;
 import com.intern.restaurant.model.User;
 import com.intern.restaurant.repository.UserRepository;
+import com.intern.restaurant.security.CustomUserDetails;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -176,6 +179,13 @@ public class UserServiceImpl implements UserService{
 				deleteById(user.getUs_id());
 			}
 		}
+	}
+
+	@Override
+	public int getCurrentUserLogin() {
+		// TODO Auto-generated method stub
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return ((CustomUserDetails) auth.getPrincipal()).getUs_id();
 	}
 
 	
