@@ -1,0 +1,5 @@
+package com.intern.restaurant.dto;
+
+public class PostDTO {
+
+}

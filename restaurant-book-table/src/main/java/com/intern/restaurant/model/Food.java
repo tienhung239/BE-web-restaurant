@@ -60,4 +60,8 @@ public class Food implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "us_id")
 	private User user;
+	
+	public Food(int fd_id) {
+		this.fd_id = fd_id;
+	}
 }

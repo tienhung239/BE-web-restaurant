@@ -1,0 +1,8 @@
+package com.intern.restaurant.service;
+
+import com.intern.restaurant.dto.PostDTO;
+
+public interface PostService {
+	public PostDTO listPost();
+	public PostDTO listPostByCurrentUser();
+}

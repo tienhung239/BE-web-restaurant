@@ -61,6 +61,7 @@ public class SpringSecurity {
 //               .build();
     	return http.csrf(csrf -> csrf.disable())
     				.authorizeHttpRequests(auth -> {
+    					auth.requestMatchers("/index").permitAll();
     					auth.requestMatchers("/listusers/**").hasRole("ADMIN");
     					auth.requestMatchers("/update-role/**").hasRole("ADMIN");
     					auth.requestMatchers("/register/**").permitAll();
@@ -74,6 +75,20 @@ public class SpringSecurity {
                         auth.requestMatchers("/category/list/**").permitAll();
                         auth.requestMatchers("/category/update/**").hasRole("ADMIN");
                         auth.requestMatchers("/category/delete/**").hasRole("ADMIN");
+                        
+                        auth.requestMatchers("/post/create/**").hasAnyRole("ADMIN","USER");
+                        auth.requestMatchers("/post/listpost/**").hasRole("ADMIN");
+                        auth.requestMatchers("/post/list/**").hasAnyRole("ADMIN","USER");
+                        auth.requestMatchers("/post/update/title/**").hasAnyRole("ADMIN","USER");
+                        auth.requestMatchers("/post/update/thumbnail/**").hasAnyRole("ADMIN","USER");
+                        auth.requestMatchers("/post/update/published/**").hasRole("ADMIN");
+                        auth.requestMatchers("/post/delete/**").hasAnyRole("ADMIN","USER");
+                        
+                        auth.requestMatchers("/image/create/**").hasRole("ADMIN");
+                        auth.requestMatchers("/image/list/**").hasAnyRole("ADMIN", "USER");
+                        auth.requestMatchers("/image/list-by-food-id/**").hasAnyRole("ADMIN","USER");
+                        auth.requestMatchers("/image/update/**").hasRole("ADMIN");
+                        auth.requestMatchers("/image/delete/**").hasRole("ADMIN");
     					//auth.anyRequest().authenticated();
     				})
     				.httpBasic(withDefaults()).build();
