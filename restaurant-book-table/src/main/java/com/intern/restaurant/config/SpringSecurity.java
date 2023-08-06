@@ -89,6 +89,9 @@ public class SpringSecurity {
                         auth.requestMatchers("/image/list-by-food-id/**").hasAnyRole("ADMIN","USER");
                         auth.requestMatchers("/image/update/**").hasRole("ADMIN");
                         auth.requestMatchers("/image/delete/**").hasRole("ADMIN");
+                        
+                        auth.requestMatchers("/book-table/create/**").hasRole("USER");
+                        auth.requestMatchers("/book-table/list/**").hasRole("ADMIN");
     					//auth.anyRequest().authenticated();
     				})
     				.httpBasic(withDefaults()).build();

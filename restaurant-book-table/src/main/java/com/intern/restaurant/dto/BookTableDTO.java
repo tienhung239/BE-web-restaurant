@@ -1,9 +1,9 @@
 package com.intern.restaurant.dto;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import com.intern.restaurant.model.Food;
+import com.intern.restaurant.model.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,5 +18,6 @@ public class BookTableDTO {
 	private LocalDateTime datetime;
 	private int numberPeople;
 	private String note;
-	private List<Food> food;
+	private int fd_id;
+	private int us_id;
 }

@@ -1,0 +1,28 @@
+package com.intern.restaurant.service;
+
+import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.intern.restaurant.model.BookTable;
+import com.intern.restaurant.model.User;
+import com.intern.restaurant.repository.BookTableRepository;
+
+public class BookTableServiceImpl implements BookTableService{
+
+	@Autowired
+	private BookTableRepository bookTableRepository;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Override
+	public BookTable createBookTable(BookTable bookTable) {
+		// TODO Auto-generated method stub
+		int us_id = userService.getCurrentUserLogin();
+		bookTable.setUser(new User(us_id));
+		bookTable.setDatetime(LocalDateTime.now());
+		return bookTableRepository.save(bookTable);
+	}
+
+}
