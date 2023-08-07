@@ -7,5 +7,5 @@ import com.intern.restaurant.model.BookTable;
 
 @Repository
 public interface BookTableRepository extends JpaRepository<BookTable, Integer>{
-
+    List<BookTable> findByDatetime(LocalDateTime dateTime);
 }
