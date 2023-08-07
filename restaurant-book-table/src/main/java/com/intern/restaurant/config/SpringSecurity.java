@@ -94,6 +94,20 @@ public class SpringSecurity {
                         auth.requestMatchers("/book-table/list/**").hasRole("ADMIN");
     					//auth.anyRequest().authenticated();
     				})
+    				.formLogin(
+    					    form -> form
+    					        .loginPage("/login")
+    					        .loginProcessingUrl("/login")
+    					        .successHandler((request, response, authentication) -> {
+    					            if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+    					                response.sendRedirect("/listusers/");
+    					            } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
+    					                response.sendRedirect("/food/listfood/");
+    					            } else {
+    					                throw new IllegalStateException("Unhandled role");
+    					            }
+    					        })
+    					        .permitAll())
     				.httpBasic(withDefaults()).build();
     }
 
